@@ -7,4 +7,4 @@ from rest_framework.permissions import IsAuthenticated
 class TarefasViewSet(viewsets.ModelViewSet):
     queryset = Tarefas.objects.all()
     serializer_class = TarefasSerializer 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
