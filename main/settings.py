@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -114,9 +117,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('pt-br', 'Portuguese (Brazil)'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -152,5 +166,15 @@ DJOSER = {
         'user': 'djoser.serializers.UserSerializer',
         'current_user': 'djoser.serializers.UserSerializer',
         'token_create': 'djoser.serializers.TokenCreateSerializer',
+    },
+    'MESSAGES': {
+        'invalid_credentials': _('No active account found with the given credentials'),
+        'email_not_activated': _('Email is not activated'),
+        'email_activation_required': _('Email activation is required'),
+        'user_not_active': _('User account is disabled'),
+        'invalid_token': _('Invalid token for given user'),
+        'invalid_uid': _('Invalid user id or user does not exist'),
+        'missing_uid': _('User id field is required'),
+        'password_mismatch': _('The two password fields did not match'),
     },
 }
